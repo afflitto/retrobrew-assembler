@@ -1,0 +1,33 @@
+{
+  "name": "retrobrew-assembler",
+  "version": "1.0.0",
+  "description": "Web based assembler and simulator for my 8-bit breadboard retrobrew computer, inspired by Ben Eater.",
+  "main": "index.js",
+  "scripts": {
+    "test": "webpack-dev-server --config webpack.dev.js",
+    "start": "webpack --config webpack.prod.js",
+    "deploy": "webpack --config webpack.deploy.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/afflitto/retrobrew-assembler.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/afflitto/retrobrew-assembler/issues"
+  },
+  "homepage": "https://github.com/afflitto/retrobrew-assembler#readme",
+  "dependencies": {
+    "jquery": "^3.3.1"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^2.0.1",
+    "copy-webpack-plugin": "^5.0.2",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.2.1",
+    "webpack-merge": "^4.2.1"
+  }
+}
