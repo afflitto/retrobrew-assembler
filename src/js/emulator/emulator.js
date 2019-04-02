@@ -40,8 +40,10 @@ class Emulator {
       self.ir.in();
       self.pc.value = self.pc.value + 1;
     } else {
-      const instruction = self.instructions[self.ir.instruction]; //TODO: make the 4MSB/4LSB clearer
-      instruction.microstep({step: self.microstep, emulator: self});
+      const instruction = self.instructions[self.ir.instruction];
+      if(instruction) {
+        instruction.microstep({step: self.microstep, emulator: self});
+      }
     }
 
     self.microstep++;
