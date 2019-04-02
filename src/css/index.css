@@ -17,6 +17,14 @@
 
 }
 
+.memory-display {
+  font-family: monospace;
+}
+
+.memory-pc {
+  background-color: grey;
+}
+
 p {
   font-family: monospace;
 }

@@ -4,6 +4,7 @@
       Retrobrew Assembler
     </title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/index.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
@@ -19,10 +20,17 @@
         <div class="row">
           <div class="col-md-9 text-light">
             <h3 class="text-light">Memory</h3>
+            <div id="memory-display"></div>
           </div>
 
           <div class="col-md-3 text-light">
-            <h3 class="text-light">Registers</h3>
+            <h3>Clock</h3>
+            <div class="btn-group" role="group">
+              <button type="button" class="btn btn-success"><i class="fas fa-play"></i></button>
+              <button type="button" class="btn btn-light"><i class="fas fa-step-forward"></i></button>
+            </div>
+
+            <h3>Registers</h3>
             <label>PC</label>
             <p id="register-pc"></p>
             <label>A</label>
@@ -31,6 +39,7 @@
             <p id="register-b"></p>
             <label>OUT</label>
             <p id="register-out"></p>
+
             <label>MAR</label>
             <p id="register-mar"></p>
             <label>IR</label>
