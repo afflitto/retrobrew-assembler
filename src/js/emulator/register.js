@@ -1,5 +1,5 @@
 class Register {
-  constructor({ bus, bits }) {
+  constructor({ bus, bits = 8 }) {
     this._value = 0;
     this.bus = bus;
     this.mask = Math.pow(2, bits) - 1;

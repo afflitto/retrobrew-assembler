@@ -4,9 +4,24 @@ class Memory {
     this.mar = mar;
     this.bus = bus;
 
-    for(var i = 0; i < this.memory.length; i++) {
-      this.memory[i] = Math.floor(Math.random()*256)
-    }
+    this.memory = [
+      0b01010001,
+      0b11100000,
+      0b01010011,
+      0b11100000,
+      0b01010111,
+      0b11100000,
+      0b01011111,
+      0b11100000,
+      0b01010111,
+      0b11100000,
+      0b01010011,
+      0b11100000,
+      0b01010001,
+      0b11100000,
+      0b01010000,
+      0b11100000
+    ];
 
     console.log('Set up memory!');
   }

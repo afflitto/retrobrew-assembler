@@ -1,12 +1,16 @@
 import { Clock } from './clock.js';
 import { Memory } from './memory.js';
 import { Register } from './register.js';
+import { InstructionRegister } from './instructionregister.js';
 import { Bus } from './bus.js';
+import { Instructions } from './instructions/instructions.js';
 
 class Emulator {
 
-  constructor() {
-    this.clock = new Clock({frequency: 1, tick: this.tick}); //1Hz clock
+  constructor({ debug = false }) {
+    this.debug = debug;
+
+    this.clock = new Clock({frequency: 10, tick: this.tick}); //1Hz clock
     this.clock.start();
 
     this.bus = new Bus({bits: 8});
@@ -17,25 +21,38 @@ class Emulator {
     this.mdr = new Register({bus: this.bus, bits: 8});
     this.regOut = new Register({bus: this.bus, bits: 8});
     this.pc = new Register({bus: this.bus, bits: 4});
+    this.ir = new InstructionRegister({bus: this.bus, bits: 8});
     this.memory = new Memory({mar: this.mar, bus: this.bus});
+
+    this.instructions = Instructions;
+    this.microstep = 0;
   }
 
   tick() {
-    //test printing from memory
     let self = window.emulator;
 
-    self.pc.out();
-    self.mar.in();
+    //test printing from memory
+    if(self.microstep === 0) {
+      self.pc.out();
+      self.mar.in();
+    } else if(self.microstep === 1){
+      self.memory.out();
+      self.ir.in();
+      self.pc.value = self.pc.value + 1;
+    } else {
+      const instruction = self.instructions[self.ir.instruction]; //TODO: make the 4MSB/4LSB clearer
+      instruction.microstep({step: self.microstep, emulator: self});
+    }
 
+    self.microstep++;
+    if(self.microstep > 5) {
+      self.microstep = 0;
+    }
     self.bus.value = 'Z';
 
-    self.memory.out();
-    self.regOut.in();
-    console.log(`PC: ${self.pc.value} OUT: ${self.regOut.value}`)
-
-    self.bus.value = 'Z';
-
-    self.pc.value = self.pc.value + 1;
+    if(self.debug) {
+      console.log(`STEP: ${self.microstep} PC: ${self.pc.value} IR: ${self.ir.instruction}`)
+    }
   }
 }
 
