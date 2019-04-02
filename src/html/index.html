@@ -7,8 +7,42 @@
     <link rel="stylesheet" href="./css/index.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-
   <body>
+    <nav class="site-header sticky-top py-md-1">
+      <div class="container d-flex flex-column flex-md-row justify-content-between px-md-5">
+        <a class="py-2 d-none d-md-inline-block" href="#home">Simulator</a>
+      </div>
+    </nav>
 
+    <div id="home" class="position-relative overflow-hidden p-3 p-md-5 m-md-3 ">
+      <div class="container bg-dark p-5">
+        <div class="row">
+          <div class="col-md-9 text-light">
+            <h3 class="text-light">Memory</h3>
+          </div>
+
+          <div class="col-md-3 text-light">
+            <h3 class="text-light">Registers</h3>
+            <label>PC</label>
+            <p id="register-pc"></p>
+            <label>A</label>
+            <p id="register-a"></p>
+            <label>B</label>
+            <p id="register-b"></p>
+            <label>OUT</label>
+            <p id="register-out"></p>
+            <label>MAR</label>
+            <p id="register-mar"></p>
+            <label>IR</label>
+            <p id="register-ir"></p>
+            <label>FLAGS</label>
+            <p>Zero:</p>
+            <p id="register-flag-zero"></p>
+            <p>Carry:</p>
+            <p id="register-flag-carry"></p>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

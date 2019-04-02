@@ -9,18 +9,18 @@ import { FlagsRegister } from './flagsregister.js';
 
 class Emulator {
 
-  constructor({ debug = false }) {
+  constructor({ uiTick, debug = false }) {
+    this.uiTick = uiTick;
     this.debug = debug;
 
-    this.clock = new Clock({frequency: 500, tick: this.tick}); //1Hz clock
+    this.clock = new Clock({frequency: 10, tick: this.tick}); //1Hz clock
     this.clock.start();
 
     this.bus    = new Bus({bits: 8});
 
     this.regA   = new Register({bus: this.bus, bits: 8});
     this.regB   = new Register({bus: this.bus, bits: 8});
-    this.mar    = new Register({bus: this.bus, bits: 8});
-    this.mdr    = new Register({bus: this.bus, bits: 8});
+    this.mar    = new Register({bus: this.bus, bits: 4});
     this.regOut = new Register({bus: this.bus, bits: 8});
     this.pc     = new Register({bus: this.bus, bits: 4});
     this.ir     = new InstructionRegister({bus: this.bus, bits: 8});
@@ -61,6 +61,8 @@ class Emulator {
     if(self.debug) {
       console.log(`STEP: ${self.microstep} PC: ${self.pc.value} IR: ${self.ir.instruction} CARRY: ${self.flags.carry} ZERO: ${self.flags.zero}`)
     }
+
+    self.uiTick();
   }
 }
 
