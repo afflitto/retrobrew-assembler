@@ -20,7 +20,7 @@ class Memory {
       0b00000000,
       0b00000000,
       0b00000001, //int i
-      99          //int x
+      240          //int x
     ];
 
     console.log('Set up memory!');

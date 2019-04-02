@@ -5,13 +5,14 @@ import { InstructionRegister } from './instructionregister.js';
 import { Bus } from './bus.js';
 import { Instructions } from './instructions/instructions.js';
 import { ALU } from './alu.js';
+import { FlagsRegister } from './flagsregister.js';
 
 class Emulator {
 
   constructor({ debug = false }) {
     this.debug = debug;
 
-    this.clock = new Clock({frequency: 10, tick: this.tick}); //1Hz clock
+    this.clock = new Clock({frequency: 50, tick: this.tick}); //1Hz clock
     this.clock.start();
 
     this.bus    = new Bus({bits: 8});
@@ -24,7 +25,8 @@ class Emulator {
     this.pc     = new Register({bus: this.bus, bits: 4});
     this.ir     = new InstructionRegister({bus: this.bus, bits: 8});
 
-    this.alu    = new ALU({bus: this.bus, regA: this.regA, regB: this.regB});
+    this.flags  = new FlagsRegister();
+    this.alu    = new ALU({bus: this.bus, regA: this.regA, regB: this.regB, flags: this.flags });
 
     this.memory = new Memory({mar: this.mar, bus: this.bus});
 
@@ -57,7 +59,7 @@ class Emulator {
     self.bus.value = 'Z';
 
     if(self.debug) {
-      console.log(`STEP: ${self.microstep} PC: ${self.pc.value} IR: ${self.ir.instruction}`)
+      console.log(`STEP: ${self.microstep} PC: ${self.pc.value} IR: ${self.ir.instruction} CARRY: ${self.flags.carry} ZERO: ${self.flags.zero}`)
     }
   }
 }
