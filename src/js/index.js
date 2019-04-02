@@ -2,9 +2,31 @@ import jQuery from "jquery";
 window.$ = window.jQuery = jQuery;
 
 import { Emulator } from './emulator/emulator.js';
+import { Assembler } from './assembler/assembler.js';
 
 const emulator = new Emulator({debug: false, uiTick: updateUI});
 window.emulator = emulator;
+
+const code = `
+dec:	LDA	x
+		  SUB	i
+	    STA	x
+      OUT
+      JEZ	INC
+	    JMP	DEC
+inc:	LDA	x
+		  ADD	i
+	    STA	x
+      OUT
+      JEZ	DEC
+      JMP	INC
+			NOP
+			NOP
+i:		db	1
+x:		db	255
+`;
+
+emulator.memory.memory = Assembler.assemble(code);
 
 $(() => {
   $('#clock-play-pause').click(() => {
