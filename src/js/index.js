@@ -42,8 +42,8 @@ function updateUI() {
   $('#register-out').text(window.emulator.regOut.value.toString(2).padStart(8, '0'));
   $('#register-mar').text(window.emulator.mar.value.toString(2).padStart(4, '0'));
   $('#register-ir').text(window.emulator.ir.instruction.toString(2).padStart(4, '0') + ' ' + window.emulator.ir.data.toString(2).padStart(4, '0'));
-  $('#register-flag-zero').text(window.emulator.flags.zero);
-  $('#register-flag-carry').text(window.emulator.flags.carry);
+  $('#register-flag-zero').text('Zero: ' + window.emulator.flags.zero);
+  $('#register-flag-carry').text('Carry: ' + window.emulator.flags.carry);
 
 
   $('#memory-display').html(generateMemoryDisplay(window.emulator.memory.memory, window.emulator.pc.value));
