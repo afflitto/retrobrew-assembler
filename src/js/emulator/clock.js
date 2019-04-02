@@ -5,12 +5,15 @@ class Clock {
   }
 
   start() {
-    this.interval = setInterval(this.tick, this.period);
+    if(!this.interval) {
+      this.interval = setInterval(this.tick, this.period);
+    }
   }
 
   stop() {
     if(this.interval) {
       clearInterval(this.interval);
+      this.interval = null;
     }
   }
 
@@ -22,6 +25,10 @@ class Clock {
 
   setTickFunction(fn) {
     this.tick = fn;
+  }
+
+  get isRunning() {
+    return !!this.interval;
   }
 }
 
