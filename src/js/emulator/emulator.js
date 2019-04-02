@@ -12,7 +12,7 @@ class Emulator {
   constructor({ debug = false }) {
     this.debug = debug;
 
-    this.clock = new Clock({frequency: 50, tick: this.tick}); //1Hz clock
+    this.clock = new Clock({frequency: 500, tick: this.tick}); //1Hz clock
     this.clock.start();
 
     this.bus    = new Bus({bits: 8});

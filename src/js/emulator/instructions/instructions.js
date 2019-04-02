@@ -5,8 +5,8 @@ import { SUB } from "./SUB.js";
 import { STA } from "./STA.js";
 import { LDI } from './LDI.js';
 import { JMP } from "./JMP.js";
-// import JEZ from "./JEZ.js";
-// import JGZ from "./JGZ.js";
+import { JEZ } from "./JEZ.js";
+import { JGZ } from "./JGZ.js";
 import { OUT } from './OUT.js';
 import { HLT } from "./HLT.js";
 
@@ -18,8 +18,8 @@ let Instructions = {
   0b0100: new STA(),
   0b0101: new LDI(),
   0b0110: new JMP(),
-  // 0b0111: new JEZ(),
-  // 0b1000: new JGZ(),
+  0b0111: new JEZ(),
+  0b1000: new JGZ(),
   0b1110: new OUT(),
   0b1111: new HLT()
 }
