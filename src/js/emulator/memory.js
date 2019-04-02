@@ -7,8 +7,9 @@ class Memory {
     this.memory = [
       0b00011111, //LDA x
       0b11100000, //OUT
-      0b01001110, //STA 1110
-      0b01100000, //JMP 0
+      0b00101110, //ADD i
+      0b11100000, //OUT
+      0b01100010, //JMP 0010
       0b00000000,
       0b00000000,
       0b00000000,
@@ -18,9 +19,8 @@ class Memory {
       0b00000000,
       0b00000000,
       0b00000000,
-      0b00000000,
-      0b00000000,
-      99          //uint8_t x
+      0b00000001, //int i
+      99          //int x
     ];
 
     console.log('Set up memory!');
