@@ -25,6 +25,17 @@
   background-color: grey;
 }
 
+#code {
+  width: 100%;
+  padding: 15px;
+  height: 400px;
+}
+
+textarea {
+  font-family: monospace;
+  resize: none;
+}
+
 p {
   font-family: monospace;
 }

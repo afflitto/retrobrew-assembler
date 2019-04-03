@@ -4,10 +4,12 @@ class Assembler {
     let memoryOps = [];
     let memoryData = [];
 
-    let lines = code.split('\n').filter(line => line); //filter out empty lines
+    let lines = code.split('\n').filter(line => line.trim()); //filter out empty lines
     if(lines.length > 16) {
-      throw 'Error: Not enough memory for this code!';
+      throw `Error: Not enough memory for this code! (${lines.length} lines)`;
     }
+
+    console.log(lines);
 
     //find labels
     lines.forEach((line, lineNumber) => {
@@ -31,10 +33,10 @@ class Assembler {
         if(InstructionMap[op] || InstructionMap[op] === 0 || op.toLowerCase() === 'db') {
           memoryOps[lineNumber] = InstructionMap[op];
         } else {
-          throw `Error: Unknown op: ${op}`;
+          throw `Error: Unknown op: ${op} (line ${lineNumber + 1})`;
         }
       } else {
-        throw `Error: No op on line ${lineNumber}`;
+        throw `Error: No op (line ${lineNumber + 1})`;
       }
     });
 
@@ -46,7 +48,7 @@ class Assembler {
       const [fullMatch, label, op, operand] = regex.exec(line);
 
       if(operand) {
-        if(parseInt(operand)) {
+        if(parseInt(operand) >= 0) {
           memoryData[lineNumber] = parseInt(operand);
         } else {
           const addressFromLabel = labels.filter(label => {
@@ -56,7 +58,7 @@ class Assembler {
           if(addressFromLabel) {
             memoryData[lineNumber] = addressFromLabel.lineNumber;
           } else {
-            throw `Error: Unknown label: ${operand}`
+            throw `Error: Unknown label: ${operand} (line ${lineNumber + 1})`
           }
         }
       }

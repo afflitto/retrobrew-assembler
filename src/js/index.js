@@ -7,25 +7,7 @@ import { Assembler } from './assembler/assembler.js';
 const emulator = new Emulator({debug: false, uiTick: updateUI});
 window.emulator = emulator;
 
-const code = `
-dec:	LDA	x
-		  SUB	i
-	    STA	x
-      OUT
-      JEZ	INC
-	    JMP	DEC
-inc:	LDA	x
-		  ADD	i
-	    STA	x
-      OUT
-      JEZ	DEC
-      JMP	INC
-			NOP
-			NOP
-i:		db	1
-x:		db	255
-`;
-
+const code = $('#code').text();
 emulator.memory.memory = Assembler.assemble(code);
 
 $(() => {
@@ -53,6 +35,12 @@ $(() => {
       window.emulator.clock.step();
     }
   });
+
+	$('#code').change(() => {
+		const code = $('#code').val();
+		emulator.memory.memory = Assembler.assemble(code);
+		updateUI();
+	})
 
   updateUI(); //fill in memory/registers with initial state
 });
