@@ -92,6 +92,7 @@ function updateUI() {
   $('#register-ir').text(window.emulator.ir.instruction.toString(2).padStart(4, '0') + ' ' + window.emulator.ir.data.toString(2).padStart(4, '0'));
   $('#register-flag-zero').text('Zero: ' + window.emulator.flags.zero);
   $('#register-flag-carry').text('Carry: ' + window.emulator.flags.carry);
+	$('#register-out-decimal').text(window.emulator.regOut.value.toString().padStart(3, '0'))
 
 	//print memory contents
   $('#memory-display').html(generateMemoryDisplay(window.emulator.memory.memory, window.emulator.pc.value));
