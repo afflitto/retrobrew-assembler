@@ -46,7 +46,14 @@ $(() => { //window ready
 		window.localStorage.code = code;
 
 		updateUI();
-	})
+	});
+
+	$('#clock-frequency').change(() => {
+		const freq = $('#clock-frequency').val();
+		if(freq > 0 && freq < 1000) {
+			emulator.clock.updateFrequency(freq);
+		}
+	});
 
   updateUI(); //fill in memory/registers with initial state
 });

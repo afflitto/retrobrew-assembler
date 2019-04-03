@@ -31,6 +31,10 @@
   height: 400px;
 }
 
+#clock-frequency {
+  text-align: right;
+}
+
 textarea {
   font-family: monospace;
   resize: none;

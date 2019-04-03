@@ -28,10 +28,17 @@
 
           <div class="col-md-3 text-light">
             <h3>Clock</h3>
-            <div class="btn-group" role="group">
-              <button type="button" class="btn btn-success" id="clock-play-pause"><i class="fas fa-play"></i></button>
-              <button type="button" class="btn btn-light" id="clock-step"><i class="fas fa-step-forward"></i></button>
+            <div class="input-group">
+              <div class="input-group-prepend" role="group">
+                <button type="button" class="btn btn-success" id="clock-play-pause"><i class="fas fa-play"></i></button>
+                <button type="button" class="btn btn-secondary" id="clock-step"><i class="fas fa-step-forward"></i></button>
+              </div>
+              <input type="number" class="form-control" id="clock-frequency" value="10" min="1" max="999">
+              <div class="input-group-append" role="group">
+                <span class="input-group-text">Hz</span>
+              </div>
             </div>
+
 
             <h3>Registers</h3>
             <label>PC</label>
