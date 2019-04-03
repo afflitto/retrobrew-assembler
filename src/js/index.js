@@ -12,16 +12,19 @@ const params = new URLSearchParams(location.search);
 let code = '';
 if(params.has('code')) {
 	code = atob(params.get('code'));
-}
-if(window.localStorage.code) {
+} else if(window.localStorage.code) {
 	code = window.localStorage.code;
 }
 $('#code').val(code);
 emulator.memory.memory = Assembler.assemble(code);
 
+//set stored clock frequency
 if(params.has('frequency')) {
 	emulator.clock.updateFrequency(params.get('frequency'));
 	$('#clock-frequency').val(params.get('frequency'));
+} else if(window.localStorage.frequency) {
+	emulator.clock.updateFrequency(window.localStorage.frequency);
+	$('#clock-frequency').val(window.localStorage.frequency);
 }
 
 $(() => { //window ready
@@ -54,6 +57,7 @@ $(() => { //window ready
     }
   });
 
+	//re-assemble code when it's updated
 	$('#code').change(() => {
 		const code = $('#code').val();
 		emulator.memory.memory = Assembler.assemble(code);
@@ -65,6 +69,7 @@ $(() => { //window ready
 		updateUI();
 	});
 
+	//update clock's frequency with new value
 	$('#clock-frequency').change(() => {
 		const freq = $('#clock-frequency').val();
 		if(freq > 0 && freq < 1000) {
