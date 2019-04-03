@@ -92,7 +92,7 @@ const InstructionMap = {
   "LDI": 0b0101,
   "JMP": 0b0110,
   "JEZ": 0b0111,
-  "JGZ": 0b1000,
+  "JC": 0b1000,
   "OUT": 0b1110,
   "HLT": 0b1111,
 }
