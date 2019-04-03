@@ -8,7 +8,8 @@ const emulator = new Emulator({debug: false, uiTick: updateUI});
 window.emulator = emulator;
 
 //load initial program into memory
-const code = $('#code').text();
+const code = window.localStorage.code || '';
+$('#code').val(code);
 emulator.memory.memory = Assembler.assemble(code);
 
 $(() => { //window ready
@@ -41,6 +42,9 @@ $(() => { //window ready
 	$('#code').change(() => {
 		const code = $('#code').val();
 		emulator.memory.memory = Assembler.assemble(code);
+
+		window.localStorage.code = code;
+
 		updateUI();
 	})
 

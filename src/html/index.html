@@ -21,22 +21,6 @@
           <div class="col-md-9 text-light">
             <h3>Code</h3>
             <textarea id="code" style="font-family: monospace">
-dec:  LDA	x
-      SUB	i
-      STA	x
-      OUT
-      JEZ	INC
-      JMP	DEC
-inc:  LDA	x
-      ADD	i
-      STA	x
-      OUT
-      JEZ	DEC
-      JMP	INC
-      NOP
-      NOP
-i:    db 1
-x:    db 255
             </textarea>
             <h3 class="text-light">Memory</h3>
             <div id="memory-display"></div>
