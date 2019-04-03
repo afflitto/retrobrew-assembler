@@ -25,8 +25,10 @@ class Clock {
 
   updateFrequency(frequency) {
     this.period = 1000/frequency;
-    clearInterval(this.interval);
-    this.interval = setInterval(this.tick, this.period);
+    if(this.interval) {
+      clearInterval(this.interval);
+      this.interval = setInterval(this.tick, this.period);
+    }
   }
 
   get isRunning() {

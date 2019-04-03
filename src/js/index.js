@@ -20,21 +20,24 @@ $(() => { //window ready
       $('#clock-play-pause').html(`<i class="fas fa-play"></i>`);
       $('#clock-play-pause').addClass('btn-success');
       $('#clock-play-pause').removeClass('btn-danger');
+
+			//enable stepping and freq changing
+			$('#clock-step').prop('disabled', false);
+			$('#clock-frequency').prop('disabled', false);
     } else {
       window.emulator.clock.start();
       $('#clock-play-pause').html(`<i class="fas fa-pause"></i>`);
       $('#clock-play-pause').addClass('btn-danger');
       $('#clock-play-pause').removeClass('btn-success');
+
+			//disable stepping and freq changing
+			$('#clock-step').prop('disabled', true);
+			$('#clock-frequency').prop('disabled', true);
     }
   });
 
   $('#clock-step').click(() => {
-    if(window.emulator.clock.isRunning) {
-      window.emulator.clock.stop();
-      $('#clock-play-pause').html(`<i class="fas fa-play"></i>`);
-      $('#clock-play-pause').addClass('btn-success');
-      $('#clock-play-pause').removeClass('btn-danger');
-    } else {
+    if(!window.emulator.clock.isRunning) {
       window.emulator.clock.step();
     }
   });
@@ -78,8 +81,50 @@ function updateUI() {
 		$('#clock-play-pause').addClass('btn-success');
 		$('#clock-play-pause').removeClass('btn-danger');
 	}
+
+	//highlight line of code being executed
+	selectTextAreaLine($('#code')[0], emulator.pc.value + 1);
 }
 
+function selectTextAreaLine(textArea, lineNum){
+	//from http://lostsource.com/2012/11/30/selecting-textarea-line.html
+	lineNum--; // array starts at 0
+  const lines = textArea.value.split('\n');
+
+  // calculate start/end
+  let startPos = 0, endPos = textArea.value.length;
+  for(let i = 0; i < lines.length; i++) {
+    if(i == lineNum) {
+        break;
+    }
+    startPos += (lines[i].length+1);
+  }
+
+  endPos = lines[lineNum].length+startPos;
+
+  // do selection
+  // Chrome / Firefox
+  if(typeof(textArea.selectionStart) != "undefined") {
+    textArea.focus();
+    textArea.selectionStart = startPos;
+    textArea.selectionEnd = endPos;
+    return true;
+  }
+
+  // IE
+  if (document.selection && document.selection.createRange) {
+    textArea.focus();
+    textArea.select();
+    const range = document.selection.createRange();
+    range.collapse(true);
+    range.moveEnd("character", endPos);
+    range.moveStart("character", startPos);
+    range.select();
+    return true;
+  }
+
+  return false;
+}
 
 function generateMemoryDisplay(memory, pc) {
   let html = '';
