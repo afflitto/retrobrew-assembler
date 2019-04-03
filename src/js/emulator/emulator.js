@@ -64,6 +64,16 @@ class Emulator {
 
     self.uiTick();
   }
+
+  reset() {
+    this.regA.clear();
+    this.regB.clear();
+    this.mar.clear();
+    this.regOut.clear();
+    this.pc.clear();
+    this.ir.clear();
+    this.flags.clear();
+  }
 }
 
 export { Emulator }

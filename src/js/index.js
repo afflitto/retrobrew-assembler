@@ -1,16 +1,18 @@
+import { Emulator } from './emulator/emulator.js';
+import { Assembler } from './assembler/assembler.js';
 import jQuery from "jquery";
 window.$ = window.jQuery = jQuery;
 
-import { Emulator } from './emulator/emulator.js';
-import { Assembler } from './assembler/assembler.js';
-
+//create CPU and make it global
 const emulator = new Emulator({debug: false, uiTick: updateUI});
 window.emulator = emulator;
 
+//load initial program into memory
 const code = $('#code').text();
 emulator.memory.memory = Assembler.assemble(code);
 
-$(() => {
+$(() => { //window ready
+	//set up play/pause/step listeners
   $('#clock-play-pause').click(() => {
     if(window.emulator.clock.isRunning) {
       window.emulator.clock.stop();
@@ -46,6 +48,7 @@ $(() => {
 });
 
 function updateUI() {
+	//update register printout with their values
   $('#register-pc').text(window.emulator.pc.value.toString(2).padStart(4, '0'));
   $('#register-a').text(window.emulator.regA.value.toString(2).padStart(8, '0'));
   $('#register-b').text(window.emulator.regB.value.toString(2).padStart(8, '0'));
@@ -55,8 +58,15 @@ function updateUI() {
   $('#register-flag-zero').text('Zero: ' + window.emulator.flags.zero);
   $('#register-flag-carry').text('Carry: ' + window.emulator.flags.carry);
 
-
+	//print memory contents
   $('#memory-display').html(generateMemoryDisplay(window.emulator.memory.memory, window.emulator.pc.value));
+
+	//update clock play/pause button when halted
+	if(!window.emulator.clock.isRunning) {
+		$('#clock-play-pause').html(`<i class="fas fa-play"></i>`);
+		$('#clock-play-pause').addClass('btn-success');
+		$('#clock-play-pause').removeClass('btn-danger');
+	}
 }
 
 
