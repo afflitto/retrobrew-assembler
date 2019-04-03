@@ -2,6 +2,9 @@ import { Emulator } from './emulator/emulator.js';
 import { Assembler } from './assembler/assembler.js';
 import jQuery from "jquery";
 window.$ = window.jQuery = jQuery;
+import CodeMirror from 'codemirror';
+import 'codemirror/lib/codemirror.css';
+import 'codemirror/mode/javascript/javascript.js';
 
 //create CPU and make it global
 const emulator = new Emulator({debug: false, uiTick: updateUI});
@@ -26,6 +29,12 @@ if(params.has('frequency')) {
 	emulator.clock.updateFrequency(window.localStorage.frequency);
 	$('#clock-frequency').val(window.localStorage.frequency);
 }
+
+//set up codemirror
+const codemirror = CodeMirror.fromTextArea($('#code')[0], {
+	lineNumbers: true
+});
+window.cm = codemirror
 
 $(() => { //window ready
 	//set up play/pause/step listeners
@@ -59,7 +68,7 @@ $(() => { //window ready
 
 	//re-assemble code when it's updated
 	$('#assemble-button').click(() => {
-		const code = $('#code').val();
+		const code = codemirror.getValue();
 		emulator.memory.memory = Assembler.assemble(code);
 
 		window.localStorage.code = code;
@@ -109,53 +118,14 @@ function updateUI() {
 	}
 
 	//highlight line of code being executed
-	selectTextAreaLine($('#code')[0], emulator.pc.value + 1);
+	const line = emulator.pc.value
+	codemirror.setSelection({line: line, ch: 0}, {line: line, ch: 100});
 }
 
 function updateUrlParam(name, value) {
 	const params = new URLSearchParams(location.search);
 	params.set(name, value);
 	location.search = params.toString();
-}
-
-function selectTextAreaLine(textArea, lineNum){
-	//from http://lostsource.com/2012/11/30/selecting-textarea-line.html
-	lineNum--; // array starts at 0
-  const lines = textArea.value.split('\n');
-
-  // calculate start/end
-  let startPos = 0, endPos = textArea.value.length;
-  for(let i = 0; i < lines.length; i++) {
-    if(i == lineNum) {
-        break;
-    }
-    startPos += (lines[i].length+1);
-  }
-
-  endPos = lines[lineNum].length+startPos;
-
-  // do selection
-  // Chrome / Firefox
-  if(typeof(textArea.selectionStart) != "undefined") {
-    textArea.focus();
-    textArea.selectionStart = startPos;
-    textArea.selectionEnd = endPos;
-    return true;
-  }
-
-  // IE
-  if (document.selection && document.selection.createRange) {
-    textArea.focus();
-    textArea.select();
-    const range = document.selection.createRange();
-    range.collapse(true);
-    range.moveEnd("character", endPos);
-    range.moveStart("character", startPos);
-    range.select();
-    return true;
-  }
-
-  return false;
 }
 
 function generateMemoryDisplay(memory, pc) {
