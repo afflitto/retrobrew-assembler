@@ -31,7 +31,7 @@ class ALU {
     } else {
       this.flags.zero = false;
     }
-    if(sum > 255) {
+    if(sum >= 0) {
       this.flags.carry = true;
     } else {
       this.flags.carry = false;

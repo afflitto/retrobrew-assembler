@@ -19,6 +19,11 @@ if(window.localStorage.code) {
 $('#code').val(code);
 emulator.memory.memory = Assembler.assemble(code);
 
+if(params.has('frequency')) {
+	emulator.clock.updateFrequency(params.get('frequency'));
+	$('#clock-frequency').val(params.get('frequency'));
+}
+
 $(() => { //window ready
 	//set up play/pause/step listeners
   $('#clock-play-pause').click(() => {
@@ -55,7 +60,7 @@ $(() => { //window ready
 
 		window.localStorage.code = code;
 
-		updateUrlParam(code);
+		updateUrlParam('code', btoa(code));
 
 		updateUI();
 	});
@@ -64,6 +69,8 @@ $(() => { //window ready
 		const freq = $('#clock-frequency').val();
 		if(freq > 0 && freq < 1000) {
 			emulator.clock.updateFrequency(freq);
+			window.localStorage.frequency = freq;
+			updateUrlParam('frequency', freq);
 		}
 	});
 
@@ -89,15 +96,19 @@ function updateUI() {
 		$('#clock-play-pause').html(`<i class="fas fa-play"></i>`);
 		$('#clock-play-pause').addClass('btn-success');
 		$('#clock-play-pause').removeClass('btn-danger');
+
+		//enable stepping and freq changing
+		$('#clock-step').prop('disabled', false);
+		$('#clock-frequency').prop('disabled', false);
 	}
 
 	//highlight line of code being executed
 	selectTextAreaLine($('#code')[0], emulator.pc.value + 1);
 }
 
-function updateUrlParam(code) {
+function updateUrlParam(name, value) {
 	const params = new URLSearchParams(location.search);
-	params.set('code', btoa(code));
+	params.set(name, value);
 	location.search = params.toString();
 }
 
