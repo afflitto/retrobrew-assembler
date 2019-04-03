@@ -25,6 +25,10 @@
   background-color: grey;
 }
 
+.registers p {
+  font-family: monospace;
+}
+
 #code {
   width: 100%;
   padding: 15px;
@@ -38,8 +42,4 @@
 textarea {
   font-family: monospace;
   resize: none;
-}
-
-p {
-  font-family: monospace;
 }
