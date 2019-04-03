@@ -8,7 +8,14 @@ const emulator = new Emulator({debug: false, uiTick: updateUI});
 window.emulator = emulator;
 
 //load initial program into memory
-const code = window.localStorage.code || '';
+const params = new URLSearchParams(location.search);
+let code = '';
+if(params.has('code')) {
+	code = atob(params.get('code'));
+}
+if(window.localStorage.code) {
+	code = window.localStorage.code;
+}
 $('#code').val(code);
 emulator.memory.memory = Assembler.assemble(code);
 
@@ -48,6 +55,8 @@ $(() => { //window ready
 
 		window.localStorage.code = code;
 
+		updateUrlParam(code);
+
 		updateUI();
 	});
 
@@ -84,6 +93,12 @@ function updateUI() {
 
 	//highlight line of code being executed
 	selectTextAreaLine($('#code')[0], emulator.pc.value + 1);
+}
+
+function updateUrlParam(code) {
+	const params = new URLSearchParams(location.search);
+	params.set('code', btoa(code));
+	location.search = params.toString();
 }
 
 function selectTextAreaLine(textArea, lineNum){
