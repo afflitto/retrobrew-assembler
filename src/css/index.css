@@ -32,14 +32,10 @@
 #code {
   width: 100%;
   padding: 15px;
-  height: 400px;
+  font-family: monospace;
+  resize: none;
 }
 
 #clock-frequency {
   text-align: right;
-}
-
-textarea {
-  font-family: monospace;
-  resize: none;
 }

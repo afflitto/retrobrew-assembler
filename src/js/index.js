@@ -58,7 +58,7 @@ $(() => { //window ready
   });
 
 	//re-assemble code when it's updated
-	$('#code').change(() => {
+	$('#assemble-button').click(() => {
 		const code = $('#code').val();
 		emulator.memory.memory = Assembler.assemble(code);
 
