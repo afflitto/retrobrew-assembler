@@ -2,6 +2,7 @@ import { Emulator } from './emulator/emulator.js';
 import { Assembler } from './assembler/assembler.js';
 import jQuery from "jquery";
 window.$ = window.jQuery = jQuery;
+require('bootstrap');
 import CodeMirror from 'codemirror';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/mode/javascript/javascript.js';
@@ -34,7 +35,6 @@ if(params.has('frequency')) {
 const codemirror = CodeMirror.fromTextArea($('#code')[0], {
 	lineNumbers: true
 });
-window.cm = codemirror
 
 $(() => { //window ready
 	//set up play/pause/step listeners
@@ -102,6 +102,12 @@ $(() => { //window ready
 		}
 	});
 
+	$('#programs-load').click(() => {
+		const programs = getPrograms();
+		const dropdown = generateProgramsDropdown(programs);
+		$('#programs-dropdown').html(dropdown);
+	});
+
   updateUI(); //fill in memory/registers with initial state
 });
 
@@ -135,6 +141,17 @@ function updateUI() {
 	const line = emulator.pc.value; //TODO: need to map this to the actual code
 	codemirror.setSelection({line: line, ch: 0}, {line: line, ch: 100}, {
 		scroll: false
+	});
+}
+
+function getPrograms() {
+	return window.localStorage.programs;
+}
+
+function generateProgramsDropdown(programs) {
+	let dropdown = '';
+	programs.forEach(program => {
+
 	});
 }
 

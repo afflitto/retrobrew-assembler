@@ -24,19 +24,13 @@
 
             <div class="input-group my-1">
               <div class="input-group-prepend">
-                <!-- <span class="input-group-text">Program</span> -->
-                <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Load</button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                  <div role="separator" class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Separated link</a>
+                <button class="btn btn-light dropdown-toggle" id="programs-load" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled="true">Load</button>
+                <div class="dropdown-menu" id="programs-dropdown">
                 </div>
               </div>
               <input type="text" class="form-control" id="program-name" placeholder="program name">
               <div class="input-group-append">
-                <button type="button" class="btn btn-light" id="save-button">Save</button>
+                <button type="button" class="btn btn-light" id="save-button" disabled="true">Save</button>
               </div>
             </div>
 
