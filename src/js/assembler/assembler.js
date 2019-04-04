@@ -9,8 +9,6 @@ class Assembler {
       throw `Error: Not enough memory for this code! (${lines.length} lines)`;
     }
 
-    console.log(lines);
-
     //find labels
     lines.forEach((line, lineNumber) => {
       const regex = /^([.A-Za-z0-9]*:)?\s*([A-Za-z]*)?\s*([.A-Za-z0-9]*)?\s?$/g;
@@ -21,8 +19,6 @@ class Assembler {
         labels.push({name: strippedLabel, lineNumber: lineNumber});
       }
     });
-
-    console.log(labels)
 
     //create ops
     lines.forEach((line, lineNumber) => {
@@ -39,8 +35,6 @@ class Assembler {
         throw `Error: No op (line ${lineNumber + 1})`;
       }
     });
-
-    console.log(memoryOps);
 
     //create data and replace labels
     lines.forEach((line, lineNumber) => {
@@ -63,8 +57,6 @@ class Assembler {
         }
       }
     });
-
-    console.log(memoryData);
 
     let memory = [];
     //combine memory and data operands

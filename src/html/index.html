@@ -3,6 +3,7 @@
     <title>
       Retrobrew Assembler
     </title>
+    <meta charset="utf-8"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/index.css">
@@ -20,9 +21,36 @@
         <div class="row">
           <div class="col-md-9 text-light">
             <h3>Code</h3>
+
+            <div class="input-group my-1">
+              <div class="input-group-prepend">
+                <!-- <span class="input-group-text">Program</span> -->
+                <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Load</button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                  <div role="separator" class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#">Separated link</a>
+                </div>
+              </div>
+              <input type="text" class="form-control" id="program-name" placeholder="program name">
+              <div class="input-group-append">
+                <button type="button" class="btn btn-light" id="save-button">Save</button>
+              </div>
+            </div>
+
             <textarea id="code" style="font-family: monospace" rows="18" spellcheck="false">
             </textarea>
-            <button class="btn btn-primary my-1" id="assemble-button">Assemble</button>
+
+            <div id="assembler-alert">
+            </div>
+
+            <div class="btn-group" role="group">
+              <button class="btn btn-sm btn-primary my-1" id="assemble-button">Assemble</button>
+              <button class="btn btn-sm btn-light my-1" id="share-button"><i class="fas fa-share-square"></i></button>
+            </div>
+
             <div class="row my-3">
               <div class="col-md-6">
                 <h3 class="text-light">Memory</h3>

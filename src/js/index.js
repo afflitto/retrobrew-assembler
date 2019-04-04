@@ -19,7 +19,7 @@ if(params.has('code')) {
 	code = window.localStorage.code;
 }
 $('#code').val(code);
-emulator.memory.memory = Assembler.assemble(code);
+//emulator.memory.memory = Assembler.assemble(code);
 
 //set stored clock frequency
 if(params.has('frequency')) {
@@ -69,13 +69,27 @@ $(() => { //window ready
 	//re-assemble code when it's updated
 	$('#assemble-button').click(() => {
 		const code = codemirror.getValue();
-		emulator.memory.memory = Assembler.assemble(code);
 
-		window.localStorage.code = code;
+		try {
+			removeAssemblerError();
+			emulator.memory.memory = Assembler.assemble(code);
+			window.localStorage.code = code;
+			updateUI();
+		} catch(err) {
+			showAssemblerError(err);
+		}
+	});
 
-		updateUrlParam('code', btoa(code));
+	//get shareable link to code
+	$('#share-button').click(() => {
+		const code = codemirror.getValue();
+		const frequency = $('#clock-frequency').val();
 
-		updateUI();
+		//TODO: eventually want to just put this in the keyboard
+		const params = new URLSearchParams(location.search);
+		params.set('code', btoa(code));
+		params.set('frequency', frequency);
+		location.search = params.toString();
 	});
 
 	//update clock's frequency with new value
@@ -118,8 +132,23 @@ function updateUI() {
 	}
 
 	//highlight line of code being executed
-	const line = emulator.pc.value
-	codemirror.setSelection({line: line, ch: 0}, {line: line, ch: 100});
+	const line = emulator.pc.value; //TODO: need to map this to the actual code
+	codemirror.setSelection({line: line, ch: 0}, {line: line, ch: 100}, {
+		scroll: false
+	});
+}
+
+function showAssemblerError(message) {
+	const alert = `
+	<div class="alert alert-danger my-3" role="alert">
+		${message}
+	</div>`;
+
+	$('#assembler-alert').html(alert);
+}
+
+function removeAssemblerError() {
+	$('#assembler-alert').html('');
 }
 
 function updateUrlParam(name, value) {
